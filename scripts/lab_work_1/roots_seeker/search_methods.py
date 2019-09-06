@@ -32,8 +32,8 @@ def find_root_bisection(math_function, eps, start, end):
     approximate_root = (current_segment_end - current_segment_start) / 2
     final_distance = abs(current_segment_start - approximate_root)
     residual_modulus = abs(math_function(approximate_root))
-
-    return approximate_root, counter, final_distance, residual_modulus
+ 
+    return approximate_root, (counter + 1), final_distance, residual_modulus
 
 
 # TODO: realize methods: Newton method, modifiable Newton method and method of secants.
