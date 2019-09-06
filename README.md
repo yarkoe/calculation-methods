@@ -1,1 +1,1 @@
-calculation-methods
+## Calculation methods course homework.
