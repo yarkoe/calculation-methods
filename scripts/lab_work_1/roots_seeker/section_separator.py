@@ -18,16 +18,16 @@ def separate_segment(math_function, step_length, start, end):
     @return: the new segments that contain roots.
     """
 
-    current_segment_start = start
-    current_segment_end = start + step_length
+    a = start
+    b = start + step_length
 
     new_segments = []
 
-    while current_segment_end <= end:
-        if math_function(current_segment_start) * math_function(current_segment_end) <= 0:
-            new_segments.append((current_segment_start, current_segment_end))
+    while b <= end:
+        if math_function(a) * math_function(b) <= 0:
+            new_segments.append((a, b))
 
-        current_segment_start = current_segment_end
-        current_segment_end = current_segment_start + step_length
+        a = b
+        b = a + step_length
 
     return new_segments

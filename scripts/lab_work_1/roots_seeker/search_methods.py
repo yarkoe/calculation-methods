@@ -14,25 +14,25 @@ def find_root_bisection(math_function, eps, start, end):
     distance between the root and previous approximation, residual modulus.
     """
 
-    current_segment_start = start
-    current_segment_end = end
+    a = start
+    b = end
 
     counter = 0
-    while abs(current_segment_end - current_segment_start) < 2 * eps:
-        current_segment_mid = (current_segment_end - current_segment_start) / 2
-        if math_function(current_segment_start) * math_function(current_segment_mid) <= 0:
-            current_segment_end = current_segment_mid
+    while abs(b - a) < 2 * eps:
+        c = (b - a) / 2
+        if math_function(a) * math_function(c) <= 0:
+            b = c
         else:
             """ If math_function(current_segment_mid) * math_function(current_segment_end) <= 0
             """
-            current_segment_start = current_segment_mid
+            a = c
 
         counter += 1
 
-    approximate_root = (current_segment_end - current_segment_start) / 2
-    final_distance = abs(current_segment_start - approximate_root)
+    approximate_root = (b - a) / 2
+    final_distance = abs(a - approximate_root)
     residual_modulus = abs(math_function(approximate_root))
- 
+
     return approximate_root, (counter + 1), final_distance, residual_modulus
 
 
