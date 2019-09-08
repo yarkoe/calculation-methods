@@ -18,8 +18,8 @@ def find_root_bisection(math_function, eps, start, end):
     b = end
 
     counter = 0
-    while abs(b - a) < 2 * eps:
-        c = (b - a) / 2
+    while (2 * eps) < abs(b - a):
+        c = (a + b) / 2
         if math_function(a) * math_function(c) <= 0:
             b = c
         else:
@@ -29,7 +29,7 @@ def find_root_bisection(math_function, eps, start, end):
 
         counter += 1
 
-    approximate_root = (b - a) / 2
+    approximate_root = (a + b) / 2
     final_distance = abs(a - approximate_root)
     residual_modulus = abs(math_function(approximate_root))
 
