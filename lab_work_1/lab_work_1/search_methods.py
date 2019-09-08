@@ -56,24 +56,28 @@ def search_root_newton(math_function, derivative, epsilon, start, end):
     while True:
         root_multiplicity += 1
 
-        approximate_root = first_point
-        cur_function_value = math_function(approximate_root)
+        pred_approximate_root = first_point
+        new_approximate_root = pred_approximate_root - \
+                               (math_function(pred_approximate_root) / derivative(pred_approximate_root)) * \
+                               root_multiplicity
 
         counter = 1
-        while cur_function_value > epsilon:
-            cur_derivative_value = derivative(approximate_root)
+        while abs(new_approximate_root - pred_approximate_root) > epsilon:
+            pred_approximate_root = new_approximate_root
 
-            if cur_derivative_value == 0.:
+            pred_derivative_value = derivative(pred_approximate_root)
+
+            if pred_derivative_value == 0.:
                 break
 
-            approximate_root = approximate_root - (cur_function_value / cur_derivative_value) * root_multiplicity
+            new_approximate_root = pred_approximate_root - \
+                                   (math_function(pred_approximate_root) / pred_derivative_value) *\
+                                   root_multiplicity
 
-            cur_function_value = math_function(approximate_root)
             counter += 1
         else:
-            residual_modulus = abs(cur_function_value)
+            residual_modulus = math_function(new_approximate_root)
 
-            return approximate_root, counter, residual_modulus
+            return new_approximate_root, counter, residual_modulus
 
-
-# TODO: realize methods: Newton method, modifiable Newton method and method of secants.
+# TODO: realize methods: modifiable Newton method and method of secants.
