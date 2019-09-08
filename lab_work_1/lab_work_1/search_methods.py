@@ -77,7 +77,52 @@ def search_root_newton(math_function, derivative, epsilon, start, end):
             counter += 1
         else:
             residual_modulus = math_function(new_approximate_root)
+            final_distance = abs(new_approximate_root - pred_approximate_root)
 
-            return new_approximate_root, counter, residual_modulus
+            return new_approximate_root, counter, final_distance, residual_modulus
+
+
+def search_root_modifiable_newton(math_function, derivative, epsilon, start, end):
+    """
+    This function searches root within given epsilon. Modifiable newton method is used here.
+    @param math_function: source function.
+    @param derivative: derivative of math_function.
+    @param epsilon: precision of found root.
+    @param start: start of segment where root would be found.
+    @param end: end of segment.
+    @return: tuple that contains the root, a count of steps that would be needed to find the root,
+    distance between the root and previous approximation, residual modulus.
+    """
+
+    first_point = end
+    first_derivative_value = derivative(first_point)
+    while first_derivative_value == 0.:
+        first_point = (start - first_point) / 2
+
+        first_derivative_value = derivative(first_point)
+
+    root_multiplicity = 0
+    while True:
+        root_multiplicity += 1
+
+        pred_approximate_root = first_point
+        new_approximate_root = pred_approximate_root - \
+                               (math_function(pred_approximate_root) / first_derivative_value) * \
+                               root_multiplicity
+
+        counter = 1
+        while abs(new_approximate_root - pred_approximate_root) > epsilon:
+            pred_approximate_root = new_approximate_root
+
+            new_approximate_root = pred_approximate_root - \
+                                   (math_function(pred_approximate_root) / first_derivative_value) * \
+                                   root_multiplicity
+
+            counter += 1
+        else:
+            residual_modulus = math_function(new_approximate_root)
+            final_distance = abs(new_approximate_root - pred_approximate_root)
+
+            return new_approximate_root, counter, final_distance, residual_modulus
 
 # TODO: realize methods: modifiable Newton method and method of secants.
