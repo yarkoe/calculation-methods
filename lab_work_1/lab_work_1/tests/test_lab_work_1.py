@@ -1,7 +1,7 @@
 import unittest
 
 from ..section_separator import separate_segment
-from ..search_methods import search_root_bisection, search_root_newton
+from ..search_methods import search_root_bisection, search_root_newton, search_root_modifiable_newton
 
 
 class TestQuadraticEquation(unittest.TestCase):
@@ -27,10 +27,19 @@ class TestQuadraticEquation(unittest.TestCase):
         self.assertAlmostEqual(roots[1], 1, delta=self.test_eps)
 
     def test_newton_method(self):
-
         roots = []
         for segment in self.segments:
             roots.append(search_root_newton(self.quadratic_function, self.derivative, self.test_eps, *segment)[0])
+
+        self.assertAlmostEqual(roots[0], -1, delta=self.test_eps)
+        self.assertAlmostEqual(roots[1], 1, delta=self.test_eps)
+
+    def test_modifiable_newton_method(self):
+
+        roots = []
+        for segment in self.segments:
+            roots.append(search_root_modifiable_newton(self.quadratic_function,
+                                                       self.derivative, self.test_eps, *segment)[0])
 
         self.assertAlmostEqual(roots[0], -1, delta=self.test_eps)
         self.assertAlmostEqual(roots[1], 1, delta=self.test_eps)
