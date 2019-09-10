@@ -8,8 +8,8 @@ from .search_methods import *
 
 
 def show_search_methods():
-    print("Лаборатоная работа № 1")
-    print("ЧИСЛЕННЫЕ МЕТОДА РЕШЕНИЯ НЕЛИНЕЙНЫХ УРАВНЕНИЙ\n")
+    print("Лабораторная работа № 1")
+    print("ЧИСЛЕННЫЕ МЕТОДЫ РЕШЕНИЯ НЕЛИНЕЙНЫХ УРАВНЕНИЙ\n")
 
     def trigonometric_function(x):
         return x * math.sin(x) - 1
