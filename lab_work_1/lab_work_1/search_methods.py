@@ -76,7 +76,7 @@ def search_root_newton(math_function, derivative, epsilon, start, end):
 
             step_counter += 1
         else:
-            residual_modulus = math_function(new_approximate_root)
+            residual_modulus = abs(math_function(new_approximate_root))
             final_distance = abs(new_approximate_root - pred_approximate_root)
 
             return new_approximate_root, step_counter, final_distance, residual_modulus, first_point
@@ -121,7 +121,7 @@ def search_root_modifiable_newton(math_function, derivative, epsilon, start, end
             step_counter += 1
         else:
             final_distance = abs(new_approximate_root - pred_approximate_root)
-            residual_modulus = math_function(new_approximate_root)
+            residual_modulus = abs(math_function(new_approximate_root))
 
             return new_approximate_root, step_counter, final_distance, residual_modulus, first_point
 
@@ -154,7 +154,7 @@ def search_root_secants_method(math_function, epsilon, start, end):
         step_counter += 1
 
     final_distance = abs(new_approximate_root - pred_approximate_root)
-    residual_modulus = math_function(new_approximate_root)
+    residual_modulus = abs(math_function(new_approximate_root))
 
     return new_approximate_root, step_counter, final_distance, residual_modulus
 
