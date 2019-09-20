@@ -21,8 +21,14 @@ def create_lagrangian_form(table, polynomial_degree):
 
             result *= table[k][0] - table[i][0]
 
+        return result
+
     def l(x, k):
-        w(x) / ((x - table[k][0]) * derivative_w(k))
+        try:
+            return w(x) / ((x - table[k][0]) * derivative_w(k))
+        except ZeroDivisionError:
+            # if (x - table[k][0]) ~ 0
+            return 1
 
     def p(x):
         sum = 0

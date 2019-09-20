@@ -12,7 +12,7 @@ def create_table(function, nodes_number, start, end):
 
     for j in range(0, nodes_number):
         # calculate a new point.
-        x_j = start + j * (start - end) / nodes_number
+        x_j = start + j * (end - start) / nodes_number
 
         table_list.append((x_j, function(x_j)))
 
