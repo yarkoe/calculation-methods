@@ -21,71 +21,65 @@ def show_algebraic_interpolation():
     print("Задача алгебраического интерполирования.")
     print("Интерполяционный многочлен в форме Ньютона и в форме Лагранжа.\n")
 
-    # def function(x):
-    #     return 2 * math.sin(x) - x / 2
-
     def function(x):
-        return math.sqrt(1 + x ** 2)
+        return 2 * math.sin(x) - x / 2
 
-    start = 0.
+    start = 0.2
     end = 0.7
-
-    print("Вид фукнции: f(x) = x*sin(x) - x/2")
-    print("A= {}, B= {}\n".format(start, end))
-
     while True:
-        try:
-            m_plus = int(input("Введите число значений в таблице: "))
-            break
-        except ValueError:
-            print("Неверный формат")
+        print("Вид фукнции: f(x) = x*sin(x) - x/2")
+        print("A= {}, B= {}\n".format(start, end))
 
-    while True:
-        try:
-            x = float(input("Введите точку интерполирования: "))
-            break
-        except ValueError:
-            print("Неверный формат")
-
-    while True:
-        try:
-            n = int(input("Введите степень интерполяции многочлена: "))
-
-            if n < m_plus:
+        while True:
+            try:
+                m_plus = int(input("Введите число значений в таблице: "))
                 break
+            except ValueError:
+                print("Неверный формат")
 
-            print("Введено недопустимое значение n")
-        except ValueError:
-            print("Неверный формат")
+        print("")
+        print("Исходная таблица значений функции:")
+        table = create_table(function, m_plus, start, end)
+        show_table(table)
+        print("")
 
-    print("")
-    print("Число значений в таблице: {}".format(m_plus))
-    print("Исходная таблица значений функции:")
-    table = create_table(function, m_plus, start, end)
-    show_table(table)
-    print("")
+        while True:
+            try:
+                x = float(input("Введите точку интерполирования: "))
+                break
+            except ValueError:
+                print("Неверный формат")
 
-    print("Точка интерполирования: {}".format(x))
-    print("Степень многочлена: {}".format(n))
+        while True:
+            try:
+                n = int(input("Введите степень интерполяции многочлена (число, не превосходящее {}): ".format(m_plus - 1)))
 
-    if n < (m_plus - 1):
-        table = sort_table(table, x)
+                if n < m_plus:
+                    break
 
-    print("Отсортированная таблица:")
-    show_table(table)
-    print("")
+                print("Введено недопустимое значение n")
+            except ValueError:
+                print("Неверный формат")
 
-    lagrangian_form = create_lagrangian_form(table, n)
-    lagrangian_form_x = lagrangian_form(x)
-    print("Значение интерполяционного многочлена, найденное при помощи представления в форме Лагранжа:")
-    print("{}".format(lagrangian_form_x))
-    print("Значение абсолютной фактической погрешности для формы Лагранжа:")
-    print("{}\n".format(abs(lagrangian_form_x - function(x))))
+        if n < (m_plus - 1):
+            table = sort_table(table, x)
 
-    newton_form = create_newton_form(table, n)
-    print("Значение интерполяционного многочлена, найденное при помощи представления в форме Ньютона:")
-    newton_form_x = newton_form(x)
-    print("{}".format(newton_form_x))
-    print("Значение абсолютной фактической погрешности для формы Ньютона:")
-    print("{}".format(abs(newton_form_x - function(x))))
+        print("Отсортированная таблица:")
+        show_table(table)
+        print("")
 
+        lagrangian_form = create_lagrangian_form(table, n)
+        lagrangian_form_x = lagrangian_form(x)
+        print("Значение интерполяционного многочлена, найденное при помощи представления в форме Лагранжа:")
+        print("{}".format(lagrangian_form_x))
+        print("Значение абсолютной фактической погрешности для формы Лагранжа:")
+        print("{}\n".format(abs(lagrangian_form_x - function(x))))
+
+        newton_form = create_newton_form(table, n)
+        print("Значение интерполяционного многочлена, найденное при помощи представления в форме Ньютона:")
+        newton_form_x = newton_form(x)
+        print("{}".format(newton_form_x))
+        print("Значение абсолютной фактической погрешности для формы Ньютона:")
+        print("{}".format(abs(newton_form_x - function(x))))
+        print("")
+        print("")
