@@ -10,7 +10,7 @@ def create_table(function, nodes_number, start, end):
 
     table_list = []
 
-    for j in range(0, nodes_number):
+    for j in range(0, nodes_number + 1):
         # calculate a new point.
         x_j = start + j * (end - start) / nodes_number
 
@@ -38,3 +38,10 @@ def reverse_table(table):
     """
 
     return [(item[1], item[0]) for item in table]
+
+
+def segment_between_value(table, function_value):
+    start = table[0][1]
+    end = table[len(table) - 1][1]
+
+
