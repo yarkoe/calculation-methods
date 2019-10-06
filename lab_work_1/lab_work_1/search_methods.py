@@ -157,6 +157,3 @@ def search_root_secants_method(math_function, epsilon, start, end):
     residual_modulus = abs(math_function(new_approximate_root))
 
     return new_approximate_root, step_counter, final_distance, residual_modulus
-
-
-# TODO: realize methods: method of secants.
