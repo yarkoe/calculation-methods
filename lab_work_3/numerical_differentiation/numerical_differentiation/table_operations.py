@@ -14,7 +14,7 @@ def create_table(function, nodes_number, start, step):
     table = []
     for i in range(nodes_number):
         new_node = start + i * step
-        table.append(new_node, function(new_node))
+        table.append((new_node, function(new_node)))
 
     return table
 
@@ -50,7 +50,7 @@ def create_differentiation_table(function, derivative, second_derivative, nodes_
     # creating the center rows of the extended table.
     center_table = []
     for i in range(1, nodes_number - 1):
-        approximate_derivative = differentiate_center(table[i+1][1], table[i-1], step)
+        approximate_derivative = differentiate_center(table[i+1][1], table[i-1][1], step)
         derivative_diff = abs(derivative(table[i][0]) - approximate_derivative)
 
         approximate_second_derivative = differentiate_center_twice(table[i][1], table[i+1][1], table[i-1][1], step)
