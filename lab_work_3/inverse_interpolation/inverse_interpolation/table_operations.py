@@ -1,10 +1,11 @@
 import math
 
+
 def create_table(function, nodes_number, start, end):
     """
     Creates a table. Row of the table is a pair (point, function(point)).
     @param function: source function.
-    @param nodes_number: amount of elements in the table.
+    @param nodes_number: the last number of node. Table starts with 0 to nodes_number nodes.
     @param start: start of a segment where the table should be created.
     @param end: end of the segment.
     @return: list of the table's elements.
