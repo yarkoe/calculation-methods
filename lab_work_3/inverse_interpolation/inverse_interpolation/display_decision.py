@@ -1,6 +1,6 @@
 import math
 
-from .table_operations import create_table, sort_table, reverse_table
+from .table_operations import create_table, sort_table, change_columns, segment_between_value
 from .lagrangian_form import create_lagrangian_form
 from .section_separator import separate_segment
 from .bisection_method import search_root_bisection
@@ -15,12 +15,14 @@ def print_table(table):
 def display_first_method(math_function, table, function_value, polynomial_degree):
     print("Способ № 1: обмен столбцов таблицы местами.")
 
-    sorted_reversed_table = sort_table(reverse_table(table), function_value)
+    changed_table = change_columns(table)
 
-    print("Отсортированная изменённая таблица: ")
-    print_table(sorted_reversed_table)
+    if polynomial_degree < len(table) - 1:
+        changed_table = sort_table(change_columns(table), function_value)
+        print("Отсортированная изменённая таблица: ")
+        print_table(changed_table)
 
-    inverse_lagrangian_form = create_lagrangian_form(sorted_reversed_table, polynomial_degree)
+    inverse_lagrangian_form = create_lagrangian_form(changed_table, polynomial_degree)
     argument = inverse_lagrangian_form(function_value)
 
     print("Значение аргумента по заданному параметру F: {}".format(argument))
@@ -29,12 +31,28 @@ def display_first_method(math_function, table, function_value, polynomial_degree
 
 def display_second_method(math_function, table, function_value, polynomial_degree, epsilon, start, end, step):
     print("Способ № 2: нахождение корней уравнения Pn(x) - F.")
-    segments = separate_segment(math_function, step, start, end)
 
-    lagrangian_form = create_lagrangian_form()
+    a, b = segment_between_value(table, function_value)
+    print("Аргументы отрезка, в котором находится значение функции F: {}, {}".format(a, b))
+
+    if polynomial_degree < len(table) - 1:
+        table = sort_table(table, (a + b) / 2.)
+        print("Отсортированная таблица: ")
+        print_table(table)
+
+    lagrangian_form = create_lagrangian_form(table, polynomial_degree)
+
+    def diff_function(x):
+        return lagrangian_form(x) - function_value
+
+    segments = separate_segment(diff_function, (end - start) / 100, start, end)
 
     for segment in segments:
-        arg = search_root_bisection(lambda x: math_function(x) - function_value, epsilon, start, end)
+        print("Рассматриваемый отрезок, где находится корень Pn(x) - F: [{}, {}]".format(*segment))
+        approximate_node = search_root_bisection(diff_function, epsilon, *segment)
+
+        print("Приближённый узел: {}".format(approximate_node))
+        print("Модуль невязки: {}".format(abs(math_function(approximate_node) - function_value)))
 
 
 def display_inverse_interpolation():

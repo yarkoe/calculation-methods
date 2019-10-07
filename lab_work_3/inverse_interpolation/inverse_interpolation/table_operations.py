@@ -32,7 +32,7 @@ def sort_table(table, node):
     return sorted(table, key=lambda element: abs(element[0] - node))
 
 
-def reverse_table(table):
+def change_columns(table):
     """
     Reverses columns of the table.
     @param table: list of (node, function_value) tuples.
