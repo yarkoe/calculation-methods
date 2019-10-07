@@ -1,3 +1,5 @@
+import math
+
 def create_table(function, nodes_number, start, end):
     """
     Creates a table. Row of the table is a pair (point, function(point)).
@@ -41,7 +43,20 @@ def reverse_table(table):
 
 
 def segment_between_value(table, function_value):
-    start = table[0][1]
-    end = table[len(table) - 1][1]
+    """
+    Look for segment of function values where the given function value lies between.
+    @param table: list of (node, function_value) tuples.
+    @param function_value:
+    @return: nodes a and b where f(a) <= function_value <= f(b).
+    """
+    start = -math.inf
+    end = math.inf
 
+    for item in table:
+        if function_value >= item[1]:
+            start = item[1]
+        elif function_value <= item[1]:
+            end = item[1]
+            break
 
+    return start, end
