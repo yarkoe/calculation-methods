@@ -1,4 +1,5 @@
 import math
+from prettytable import PrettyTable
 
 from .table_operations import create_differentiation_table
 
@@ -26,18 +27,19 @@ def input_float(message):
 
 
 def print_differentiation_table(differentiation_table):
-    print("Номер: Узел | Значение функции в узле | Производная | Разница первой производной | Вторая производная | "
-          "Разница второй производной")
+    pretty_table = PrettyTable()
+    pretty_table.field_names = ["Номер", "Узел", "Значение функции в узел", "Производная", "Разница первой производной",
+                                "Вторая производная", "Разница второй производной"]
 
-    # printing first row of diff table.
-    print("{}: {} | {} | {} | {}".format(0, *differentiation_table[0]))
+    pretty_table.add_row([0, *differentiation_table[0], "", ""])
 
     for i in range(1, len(differentiation_table) - 1):
-        print("{}: {} | {} | {} | {} | {} | {}".format(i, *differentiation_table[i]))
+        pretty_table.add_row([i, *differentiation_table[i]])
 
-    # printing last row of diff table.
-    print("{}: {} | {} | {} | {}".format(len(differentiation_table) - 1,
-                                         *differentiation_table[len(differentiation_table) - 1]))
+    pretty_table.add_row([len(differentiation_table) - 1, *differentiation_table[len(differentiation_table) - 1],
+                          "", ""])
+
+    print(pretty_table)
 
 
 def display_numerical_differentiation():
