@@ -50,14 +50,14 @@ def segment_between_value(table, function_value):
     @param function_value:
     @return: nodes a and b where f(a) <= function_value <= f(b).
     """
+
     start = -math.inf
     end = math.inf
 
     for item in table:
-        if function_value >= item[1]:
-            start = item[1]
-        elif function_value <= item[1]:
-            end = item[1]
-            break
+        if start < item[1] <= function_value:
+            start = item[0]
+        elif end > item[1] >= function_value:
+            end = item[0]
 
     return start, end
