@@ -63,7 +63,7 @@ class QFIntegralContainer:
 
         end_value = self.func(self.segment[1])  # f(x_num)
 
-        return self.step * (self.support_sum() + end_value)
+        return self.step * (self.support_sum + end_value)
 
     def calculate_by_average_rec(self):
         """
