@@ -34,20 +34,37 @@ def print_qf_method(method_name, approximate_value, true_value):
     print("Абсолютная фактическая погрешность: {}\n".format(abs(true_value - approximate_value)))
 
 
+def function_factory(function_type):
+    if function_type == "main":
+        print("Вид фукнции: f(x) = 2*sin(x) - x/2")
+        return lambda x: 2 * math.sin(x) - x / 2, lambda x: -2 * math.cos(x) - x ** 2 / 4
+    elif function_type == "x":
+        print("Вид функции: f(x) = x")
+        return lambda x: x, lambda x: x ** 2 / 2
+    elif function_type == "x**2":
+        print("Вид функции: f(x) = x^2")
+        return lambda x: x ** 2, lambda x: x ** 3 / 3
+
+
+def error(start, end, m, Md, const, d_plus):
+    return const * (end - start) * ((end - start) / m) ** d_plus * Md
+
+
 def main():
     print("Лабораторная работа № 4")
     print("Приближённое вычисление интеграла по составным квадратурным формулам")
 
-    def function(x):
-        return 2 * math.sin(x) - x / 2
+    # def function(x):
+    #     return 2 * math.sin(x) - x / 2
+    #
+    # def antiderivative(x):
+    #     return -2 * math.cos(x) - x ** 2 / 4
 
-    def antiderivative(x):
-        return -2 * math.cos(x) - x ** 2 / 4
+    function, antiderivative = function_factory("main")
 
     while True:
         start = input_float("Введите начало отрезка: ")
         end = input_float("Введите конец отрезка: ")
-        print("Вид фукнции: f(x) = 2*sin(x) - x/2")
         print("A= {}, B= {}\n".format(start, end))
 
         true_value = antiderivative(end) - antiderivative(start)
