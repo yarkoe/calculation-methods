@@ -21,4 +21,4 @@ def create_chebyshev_reduced_polynomial(n):
     @return: Chebyshev reduced polynomial.
     """
 
-    return lambda x: create_chebyshev_polynomial(n)(x) / (2 ** n)
+    return lambda x: create_chebyshev_polynomial(n)(x) / (2 ** (n - 1))
