@@ -1,6 +1,6 @@
 def create_chebyshev_hermite_polynomial(n):
     """
-    Creates Chebyshev-Hermite polynomial of degree on recursively.
+    Creates Chebyshev-Hermite polynomial of degree n recursively.
     @param n: degree of polynomial.
     @return: Chebyshev-Hermite polynomial.
     """
@@ -8,7 +8,7 @@ def create_chebyshev_hermite_polynomial(n):
     coefficient_list = create_chebyshev_hermite_polynomial_coefficients(n)
     additive = 1 if n % 2 == 0 else -1
 
-    # returns function Hn(x) = (-1)^n * (coeff[0]*1 + coeff[1]*x + coeff[2]*x**2 + ... + coeff[n+1]*x**(n+1))
+    # return function Hn(x) = (-1)^n * (coeff[0]*1 + coeff[1]*x + coeff[2]*x^2 + ... + coeff[n]*x^n)
     return lambda x: additive * sum((x ** j * coefficient_list[j] for j in range(n + 1)))
 
 
