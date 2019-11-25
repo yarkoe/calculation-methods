@@ -1,9 +1,12 @@
+import math
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 from lab_work_5.lab_work_5 import bisection_method
 from lab_work_5.lab_work_5.orthogonal_polynomials.legendre_polynomial import create_legendre_polynomial
-from lab_work_5.lab_work_5.orthogonal_polynomials.сhebyshev_polynomial import create_chebyshev_polynomial
+from lab_work_5.lab_work_5.orthogonal_polynomials.сhebyshev_polynomial import create_chebyshev_polynomial, \
+    create_chebyshev_reduced_polynomial
 from lab_work_5.lab_work_5.orthogonal_polynomials.chebyshev_hermite_polynomial \
     import create_chebyshev_hermite_polynomial
 from lab_work_5.lab_work_5.orthogonal_polynomials.chebyshev_lagerr_polynomial import create_chebyshev_lagerr_polynomial
@@ -18,8 +21,8 @@ def input_int(message):
     while True:
         try:
             int_value = int(input(message))
-            if int_value <= 0:
-                print("Значение должно быть больше 0")
+            if int_value < 0:
+                print("Значение должно быть больше или равен 0")
                 continue
             break
         except ValueError:
@@ -40,7 +43,8 @@ def show_polynomial(polynomial_name, polynomial, section):
     y = np.array([polynomial(xi) for xi in x])
 
     plt.plot(x, y, label=polynomial_name)
-    plt.show()
+    plt.title(polynomial_name)
+    plt.legend()
 
 
 def show_legendre_polynomial(n):
@@ -50,7 +54,8 @@ def show_legendre_polynomial(n):
 
     legendre_polynomial = create_legendre_polynomial(n)
 
-    show_polynomial("Многочлен Лежандра", legendre_polynomial, section)
+    show_polynomial('Многочлен Лежандра', legendre_polynomial, section)
+    plt.show()
 
 
 def show_chebyshev_polynomial(n):
@@ -58,7 +63,24 @@ def show_chebyshev_polynomial(n):
     section = [-1, 1]
 
     chebyshev_polynomial = create_chebyshev_polynomial(n)
+
+    print("Точки экстремума:")
+    for l in range(n + 1):
+        print(math.cos(math.pi * l / n))
+
     show_polynomial("Многочлен Чебышёва первого рода", chebyshev_polynomial, section)
+
+
+def show_chebyshev_reduced_polynomial(n):
+    print("Приведённый многочлен Чебышёва первого рода\n")
+    section = [-1, 1]
+
+    chebyshev_reduced_polynomial = create_chebyshev_reduced_polynomial(n)
+    x = np.linspace(*section, 200)
+    y = np.array([chebyshev_reduced_polynomial(xi) for xi in x])
+    plt.plot(x, y, label="Приведённый многочлен Чебышёва первого рода")
+    plt.legend()
+    plt.show()
 
 
 def show_chebyshev_hermite_polynomial(n):
@@ -66,7 +88,8 @@ def show_chebyshev_hermite_polynomial(n):
     section = [-5, 5]
 
     chebyshev_hermite_polynomial = create_chebyshev_hermite_polynomial(n)
-    show_polynomial("Многочлен Чебыбёшва-Эрмита", chebyshev_hermite_polynomial, section)
+    show_polynomial("Многочлен Чебышёва-Эрмита", chebyshev_hermite_polynomial, section)
+    plt.show()
 
 
 def show_chebyshev_lagerr_polynomial(alpha, n):
@@ -75,6 +98,7 @@ def show_chebyshev_lagerr_polynomial(alpha, n):
 
     chebyshev_lagerr_polynomial = create_chebyshev_lagerr_polynomial(alpha, n)
     show_polynomial("Многочлен Чебышёва-Лагерра", chebyshev_lagerr_polynomial, section)
+    plt.show()
 
 
 if __name__ == "__main__":
@@ -86,6 +110,9 @@ if __name__ == "__main__":
     print()
     show_chebyshev_polynomial(n)
     print()
+    show_chebyshev_reduced_polynomial(n)
+    print()
     show_chebyshev_hermite_polynomial(n)
     print()
-    show_chebyshev_lagerr_polynomial(1, n)
+    alpha = input_int("Введите занчение alpha: ")
+    show_chebyshev_lagerr_polynomial(alpha, n)
